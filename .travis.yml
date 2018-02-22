@@ -1,8 +1,12 @@
 os: osx
+language: node_js
 osx_image: xcode9.2
+cache:
+    directories:
+          - $HOME/Library/Caches/Homebrew
 before_install:
-  - brew update && brew bundle
+  - brew update
 install:
   - brew install ansible
-script:
+after_success:
   - "echo Done!"
