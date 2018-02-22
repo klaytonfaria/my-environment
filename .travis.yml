@@ -1,0 +1,8 @@
+os: osx
+osx_image: xcode9.2
+before_install:
+  - brew update && brew bundle
+install:
+  - brew install ansible
+script:
+  - "echo Done!"
