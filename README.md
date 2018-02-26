@@ -8,4 +8,4 @@ Running with Vagrant:
 vagrant up --provision
 ```
 
-List of applications at [here](https://raw.githubusercontent.com/daemonza/setupmac/master/roles/setup/vars/main.yml). 
+List of applications at [here](https://raw.githubusercontent.com/klaytonfaria/my-environment/master/roles/setup/vars/main.yml). 
