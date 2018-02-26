@@ -1,0 +1,69 @@
+---
+
+# Global settings
+general:
+  local_home: "{{ lookup('env','HOME') }}"
+  setup_dir: "{{ lookup('env','HOME') }}/mac-setup"
+  temp_dir: "{{ lookup('env','HOME') }}/.mac-setup/tmp"
+
+# homebrew applications
+applications:
+  - ack
+  - apktool
+  - ccat
+  - cmatrix
+  - fzf
+  - git
+  - gti
+  - highlight
+  - jq
+  - node
+  - nvm
+  - pidcat
+  - pngquant
+  - python3
+  - tmux
+  - translate-shell
+  - tree
+  - vim
+  - watchman
+  - zsh
+
+
+# Global node modules
+modules:
+  - vtop
+  - webpack
+  - chance-cli
+  - chance
+  - eslint
+  - commitizen
+  - gnomon
+  - nodemon
+  - react-native
+  - react-native-cli
+
+# homebrew cask applications
+cask_applications:
+  - 1password
+  - alfred
+  - android-studio
+  - caffeine
+  - chares
+  - discord
+  - docker
+  - evernote
+  - frappe
+  - google-chrome
+  - iterm2
+  - numi
+  - react-native-debugger
+  - rowanj-gitx
+  - skype
+  - slack
+  - spectacle
+  - spotify
+  - telegram
+  - vagrant
+  - virtualbox
+  - visual-studio-code-insiders

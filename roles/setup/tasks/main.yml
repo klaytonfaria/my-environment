@@ -1,0 +1,8 @@
+- name: application installs
+  include_tasks: apps.yml
+
+- name: configuration
+  include_tasks: configuration.yml
+
+- name: dotfiles
+  include_tasks: dotfiles.yml
