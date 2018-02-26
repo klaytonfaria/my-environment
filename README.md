@@ -1,9 +1,8 @@
-### My mac setup
+### My mac environment setup
 
-This is a [Ansible](https://www.ansible.com/) playbook to quickly setup my Mac.
+[Ansible](https://www.ansible.com/) playbook to quickly setup my Mac dev environment.
 
-
-Running with Vagrant:
+Running with Vagrant to test:
 ```
 vagrant up --provision
 ```
