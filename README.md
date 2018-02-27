@@ -1,10 +1,34 @@
-### My mac environment setup
+### Setupmac
 
-[Ansible](https://www.ansible.com/) playbook to quickly setup my Mac dev environment.
+This is a [Ansible](https://www.ansible.com/) playbook to quickly setup 
+a Mac to how I like it.
 
-Running with Vagrant to test:
+To setup run the following command :
 ```
-vagrant up --provision
+curl -s https://raw.githubusercontent.com/daemonza/setupmac/master/start.sh | /bin/bash
 ```
 
-List of applications at [here](https://raw.githubusercontent.com/klaytonfaria/my-environment/master/roles/setup/vars/main.yml). 
+The start.sh script installs `pip` and then `ansible` with pip.
+Then git clone this repository and execute the `ansible` playbook which does
+all the heavy lifting of setting your mac.
+
+If you already have ansible installed or prefer running it directly, execure the following :
+```
+ansible-playbook -i ./hosts playbook.yml --verbose
+```
+
+The playbook use homebrew with cask to install most things. You can see a list of
+what get's installed at [here](https://raw.githubusercontent.com/daemonza/setupmac/master/roles/setup/vars/main.yml). If you want to change the list of applications, clone
+this repository, and edit this file, and run the `start.sh` script.
+
+The applications it cannot install through homebrew get's downloaded to
+`$HOME/Downloads`, it's up to you to install them from the Downloads directory.
+
+
+#### Uninstall
+
+If you want to undo all the changes that `setupmac` did, run 
+
+```
+start.sh uninstall
+```
