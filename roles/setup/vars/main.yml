@@ -32,7 +32,7 @@ applications:
   - zsh
 
 # Global node modules
-modules:
+node_modules:
   - vtop
   - webpack
   - chance-cli

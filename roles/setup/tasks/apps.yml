@@ -14,3 +14,9 @@
     name: "{{item}}"
     state: installed
   with_items: "{{cask_applications}}"
+
+- name: Install "{{item}}" node.js package globally.
+  npm:
+    name: "{{item}}"
+    global: yes
+  with_items: "{{node_modules}}"
