@@ -1,5 +1,5 @@
 os: osx
-language: node_js
+language: generic
 osx_image: xcode9.2
 cache:
     directories:
