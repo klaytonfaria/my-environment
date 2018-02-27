@@ -29,9 +29,9 @@
     dest: "{{general.local_home}}/.local/share/nvim/site/autoload/plug.vim"
 
 - name: setting up Hhighlight
-    shell: >
-      curl -O "{{general.setup_dir}}/h/h.sh" https://raw.githubusercontent.com/paoloantinori/hhighlighter/master/h.sh &&
-        chmod +x "{{general.setup_dir}}/h/h.sh"
+    shell: curl -O "{{general.setup_dir}}/h/h.sh" "https://raw.githubusercontent.com/paoloantinori/hhighlighter/master/h.sh" && chmod +x "{{general.setup_dir}}/h/h.sh"
+      args:
+        executable: /bin/bash
     file:
       src: "{{general.setup_dir}}/h/h.sh"
       dest: "{{general.local_home}}/h.sh"
