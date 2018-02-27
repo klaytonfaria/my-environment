@@ -28,7 +28,7 @@
     url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     dest: "{{general.local_home}}/.local/share/nvim/site/autoload/plug.vim"
 
-- name: H (ack highlight)
+- name: setting up Hhighlight
     shell: >
       curl -O "{{general.setup_dir}}/h/h.sh" https://raw.githubusercontent.com/paoloantinori/hhighlighter/master/h.sh &&
         chmod +x "{{general.setup_dir}}/h/h.sh"
