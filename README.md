@@ -1,4 +1,6 @@
-### My mac environment setup
+[![Build Status](https://travis-ci.org/klaytonfaria/my-environment.svg?branch=master)](https://travis-ci.org/klaytonfaria/my-environment)
+
+### Mac environment setup
 
 [Ansible](https://www.ansible.com/) playbook to quickly setup my Mac dev environment.
 
@@ -12,4 +14,4 @@ Running ansible directly:
 ansible-playbook -i ./hosts playbook.yml --verbose
 ```
 
-List of applications at [here](https://raw.githubusercontent.com/klaytonfaria/my-environment/master/roles/setup/vars/main.yml). 
+List of applications at [here](https://raw.githubusercontent.com/klaytonfaria/my-environment/master/roles/setup/vars/main.yml).

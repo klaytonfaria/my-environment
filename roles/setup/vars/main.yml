@@ -65,6 +65,3 @@ cask_applications:
   - spectacle
   - spotify
   - telegram
-  - vagrant
-  - virtualbox
-  - visual-studio-code-insiders
