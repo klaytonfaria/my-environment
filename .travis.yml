@@ -4,9 +4,7 @@ osx_image: xcode9.2
 cache:
     directories:
           - $HOME/Library/Caches/Homebrew
-before_install:
-  - brew update
 install:
-  - brew install ansible
+  - sh ./start.sh
 after_success:
   - "echo Done!"
