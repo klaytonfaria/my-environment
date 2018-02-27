@@ -1,5 +1,5 @@
 os: osx
-language: python
+language: node
 osx_image: xcode9.2
 cache:
     directories:
