@@ -11,6 +11,7 @@ applications:
   - ack
   - apktool
   - ccat
+  - ccat
   - cmatrix
   - fzf
   - git
@@ -27,8 +28,8 @@ applications:
   - tree
   - vim
   - watchman
+  - zplug
   - zsh
-
 
 # Global node modules
 modules:
