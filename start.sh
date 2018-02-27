@@ -5,6 +5,6 @@ echo "==========================================="
 
 sudo easy_install pip
 sudo pip install ansible
-ansible-playbook playbook.yml --verbose
+ansible-playbook -i ./hosts playbook.yml --verbose
 
 echo "Done!"
