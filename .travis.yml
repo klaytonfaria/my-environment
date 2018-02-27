@@ -1,10 +1,7 @@
 os: osx
-language: node_js
 osx_image: xcode9.2
 cache:
     directories:
           - $HOME/Library/Caches/Homebrew
 install:
-  - sh ./start.sh
-after_success:
-  - "echo Done!"
+  - "sh ./start.sh"
