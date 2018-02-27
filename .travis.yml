@@ -1,7 +1,9 @@
 os: osx
+language: python
 osx_image: xcode9.2
 cache:
     directories:
           - $HOME/Library/Caches/Homebrew
+          - $HOME/.cache/pip
 install:
   - "sh ./start.sh"
