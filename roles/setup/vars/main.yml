@@ -56,7 +56,8 @@ cask_applications:
   - evernote
   - frappe
   - google-chrome
-  - iterm2
+  - insomnia
+  - iterm2  
   - numi
   - react-native-debugger
   - rowanj-gitx
