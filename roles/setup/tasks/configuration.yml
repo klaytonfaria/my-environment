@@ -11,12 +11,12 @@
     url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     dest: "{{general.local_home}}/.local/share/nvim/site/autoload/plug.vim"
 
-- name: setting up Hhighlight
+- name: getting Hhighlight
   get_url: "https://raw.githubusercontent.com/paoloantinori/hhighlighter/master/h.sh"
   dest: "{{general.setup_dir}}/h/h.sh"
+
+- name: setting up Hhighlight
   file:
     src: "{{general.setup_dir}}/h/h.sh"
     dest: "{{general.local_home}}/h.sh"
     state: link
-
-
