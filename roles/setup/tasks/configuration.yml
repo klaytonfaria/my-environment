@@ -6,35 +6,17 @@
     repo: https://github.com/robbyrussell/oh-my-zsh.git
     dest: "{{general.local_home}}/.oh-my-zsh"
 
-- name: getting dracula theme for oh-my-zsh
-  git:
-    repo: https://github.com/dracula/zsh.git
-    dest: "{{general.local_home}}/.oh-my-zsh_dracula_theme"
-
-- name: sym linking oh-my-zsh theme
-  file:
-    src: "{{general.local_home}}/.oh-my-zsh_dracula_theme/dracula.zsh-theme"
-    dest: "{{general.local_home}}/.oh-my-zsh/themes/dracula.zsh-theme"
-    state: link
-
-- name: create workspace directories
-  file:
-    path: "{{general.local_home}}/workspace"
-    state: directory
-
-
 - name: setting up vim-plug
   get_url:
     url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     dest: "{{general.local_home}}/.local/share/nvim/site/autoload/plug.vim"
 
 - name: setting up Hhighlight
-    shell: curl -O "{{general.setup_dir}}/h/h.sh" "https://raw.githubusercontent.com/paoloantinori/hhighlighter/master/h.sh" && chmod +x "{{general.setup_dir}}/h/h.sh"
-      args:
-        executable: /bin/bash
-    file:
-      src: "{{general.setup_dir}}/h/h.sh"
-      dest: "{{general.local_home}}/h.sh"
-      state: link
+  get_url: "https://raw.githubusercontent.com/paoloantinori/hhighlighter/master/h.sh"
+  dest: "{{general.setup_dir}}/h/h.sh"
+  file:
+    src: "{{general.setup_dir}}/h/h.sh"
+    dest: "{{general.local_home}}/h.sh"
+    state: link
 
 
