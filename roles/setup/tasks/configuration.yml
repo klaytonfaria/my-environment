@@ -11,7 +11,10 @@
     repo: https://github.com/paoloantinori/hhighlighter.git
     dest: "{{general.setup_dir}}/h"
 
-- name: setting up vim-plug
+- name: Ensures {{general.local_home}}/autoload dir exists
+  file: path={{general.local_home}}/autoload state=directory
+
+  - name: setting up vim-plug
   get_url:
     url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     dest: "{{general.local_home}}/autoload/plug.vim"
