@@ -8,15 +8,18 @@
     name: "{{item}}"
     state: latest
   with_items: "{{applications}}"
+  ignore_errors: True
 
 - name: Install homebrew cask applications
   homebrew_cask:
     name: "{{item}}"
     state: installed
   with_items: "{{cask_applications}}"
+  ignore_errors: True
 
-- name: Install "{{item}}" node.js package globally.
+- name: Install node packages globally.
   npm:
     name: "{{item}}"
     global: yes
   with_items: "{{node_modules}}"
+  ignore_errors: True

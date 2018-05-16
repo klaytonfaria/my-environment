@@ -1,37 +1,45 @@
 ---
 
+
 - name: setting up my dotfiles
   git:
     repo: https://github.com/klaytonfaria/dotfiles.git
     dest: "{{general.setup_dir}}"
+  when: dotfiles.stat.exists == False
+  ignore_errors: True
 
 - name: zsh
   file:
     src: "{{general.temp_dir}}/zsh/.zshrc"
     dest: "{{general.local_home}}/.zshrc"
     state: link
+  ignore_errors: True
 
 - name: vim
   file:
     src: "{{temp_dir}}/vim/.vimrc"
     dest: "{{general.local_home}}/.vimrc"
     state: link
+  ignore_errors: True
 
 - name: tmux
   file:
     src: "{{temp_dir}}/tmux/.tmux.conf"
     dest: "{{general.local_home}}/.tmux.conf"
     state: link
+  ignore_errors: True
 
 - name: thyme
   file:
     src: "{{temp_dir}}/thyme/.thymerc"
     dest: "{{general.local_home}}/.thymerc"
     state: link
+  ignore_errors: True
 
 - name: iterm utilities
   command: cp -r {{temp_dir}}/iterm/iterm2/{{ item }} {{general.local_home}}/.iterm2
-    with_items:
-    - "imgcat"
-    - "imgls"
-    - "it2dl"
+  with_items:
+    - imgcat
+    - imgls
+    - it2dl
+  ignore_errors: True
