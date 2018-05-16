@@ -1,1 +1,4 @@
 .vagrant/
+tmp
+playbook.retry
+playbook.retry
