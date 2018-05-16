@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-echo "Starting mac setup"
+echo "Starting the mac setup"
 echo "==========================================="
 
 sudo easy_install pip
 sudo pip install ansible
-ansible-playbook -i ./hosts playbook.yml --verbose
+ansible-playbook -i ./hosts playbook.yml
 
 echo "Done!"
