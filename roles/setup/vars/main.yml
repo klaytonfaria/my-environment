@@ -23,6 +23,7 @@ applications:
   - pidcat
   - pngquant
   - python3
+  - reattach-to-user-namespace
   - tmux
   - translate-shell
   - tree
