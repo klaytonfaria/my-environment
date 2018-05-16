@@ -16,14 +16,19 @@
     repo: https://github.com/junegunn/vim-plug.git
     dest: "{{general.setup_dir}}/vim-plug"
 
-- name: setting up vim-plug
+- name: creating directories
   file:
-    src: "{{general.setup_dir}}/vim-plug/vim-plug.vim"
-    dest: "{{general.local_home}}/autoload/plug.vim"
-    state: link
+    path: "{{general.local_home}}/{{item}}"
+    state: directory
+  with_items:
+    - autoload
 
-- name: setting up Hhighlight
+- name: setting up symlinks
   file:
-    src: "{{general.setup_dir}}/h/h.sh"
-    dest: "{{general.local_home}}/h.sh"
+    src: "{{general.setup_dir}}/{{item.dest}}"
+    dest: "{{general.local_home}}/{{item.dest}}"
     state: link
+    force: yes
+  with_items:
+    - { path: 'vim-plug/plug.vim', dest: 'autoload/plug.vim' }
+    - { path: 'h/h.sh', dest: 'h.sh' }
