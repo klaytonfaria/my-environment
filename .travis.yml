@@ -6,3 +6,5 @@ cache:
           - $HOME/Library/Caches/Homebrew
           - $HOME/.cache/pip
 script: ./start.sh
+notifications:
+  webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
