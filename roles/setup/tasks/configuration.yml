@@ -1,6 +1,12 @@
 ---
 # doing configuration
 
+- name: add nvm setup
+  shell: >
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+  args:
+    creates: "{{general.local_home}}/.nvm/nvm.sh"
+
 - name: setting up zsh with oh-my-zsh
   git:
     repo: https://github.com/robbyrussell/oh-my-zsh.git
