@@ -41,9 +41,11 @@ node_modules:
   - eslint
   - commitizen
   - gnomon
+  - lerna
   - nodemon
   - react-native
   - react-native-cli
+  - spaceship-prompt
 
 # homebrew cask applications
 cask_applications:
@@ -55,7 +57,10 @@ cask_applications:
   - discord
   - docker
   - evernote
+  - fork
   - frappe
+  - gitx
+  - grammarly
   - google-chrome
   - insomnia
   - iterm2  
@@ -65,5 +70,9 @@ cask_applications:
   - skype
   - slack
   - spectacle
+  - spectrum
   - spotify
   - telegram
+  - ticktick
+  - visual-studio-code-insiders
+  - xmind-zen
