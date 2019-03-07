@@ -7,4 +7,7 @@ cache:
           - $HOME/.cache/pip
 script: ./start.sh
 notifications:
-  webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
+  webhooks:
+    urls:
+      - https://fathomless-fjord-24024.herokuapp.com/notify
+    on_start: always
