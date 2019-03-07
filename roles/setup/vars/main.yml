@@ -19,7 +19,6 @@ applications:
   - highlight
   - jq
   - node
-  - nvm
   - pidcat
   - pngquant
   - python3
