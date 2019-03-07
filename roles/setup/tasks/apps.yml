@@ -5,21 +5,18 @@
 
 - name: Install homebrew applications
   homebrew:
-    name: "{{item}}"
+    name: "{{applications}}"
     state: latest
-  with_items: "{{applications}}"
   ignore_errors: True
 
 - name: Install homebrew cask applications
   homebrew_cask:
-    name: "{{item}}"
+    name: "{{cask_applications}}"
     state: installed
-  with_items: "{{cask_applications}}"
   ignore_errors: True
 
 - name: Install node packages globally.
   npm:
-    name: "{{item}}"
+    name: "{{node_modules}}"
     global: yes
-  with_items: "{{node_modules}}"
   ignore_errors: True
