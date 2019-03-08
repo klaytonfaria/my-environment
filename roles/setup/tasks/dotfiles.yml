@@ -1,45 +1,51 @@
 ---
 
+- name: Ensuring Iterm Is Installed
+  stat:
+    path: "/usr/local/bin/iterm"
+  register: "iterm_check"
 
 - name: setting up my dotfiles
   git:
     repo: https://github.com/klaytonfaria/dotfiles.git
-    dest: "{{general.setup_dir}}"
-  when: dotfiles.stat.exists == False
+    dest: "{{general.setup_dir}}/dotfiles"
   ignore_errors: True
 
 - name: zsh
   file:
-    src: "{{general.temp_dir}}/zsh/.zshrc"
+    src: "{{general.setup_dir}}/dotfiles/zsh/.zshrc"
     dest: "{{general.local_home}}/.zshrc"
     state: link
   ignore_errors: True
 
 - name: vim
   file:
-    src: "{{temp_dir}}/vim/.vimrc"
+    src: "{{general.setup_dir}}/dotfiles/vim/.vimrc"
     dest: "{{general.local_home}}/.vimrc"
     state: link
   ignore_errors: True
 
 - name: tmux
   file:
-    src: "{{temp_dir}}/tmux/.tmux.conf"
+    src: "{{general.setup_dir}}/dotfiles/tmux/.tmux.conf"
     dest: "{{general.local_home}}/.tmux.conf"
     state: link
   ignore_errors: True
 
+
 - name: thyme
   file:
-    src: "{{temp_dir}}/thyme/.thymerc"
+    src: "{{general.setup_dir}}/dotfiles/thyme/.thymerc"
     dest: "{{general.local_home}}/.thymerc"
     state: link
+  when: iterm_check.stat.exists
   ignore_errors: True
 
 - name: iterm utilities
-  command: cp -r {{temp_dir}}/iterm/iterm2/{{ item }} {{general.local_home}}/.iterm2
+  command: cp -r {{general.setup_dir}}/dotfiles/iterm/iterm2/{{ item }} {{general.local_home}}/.iterm2
   with_items:
     - imgcat
     - imgls
     - it2dl
+  when: iterm_check.stat.exists
   ignore_errors: True
