@@ -30,6 +30,7 @@ applications:
   - watchman
   - zplug
   - zsh
+  - zsh-completions
 
 # Global node modules
 node_modules:
