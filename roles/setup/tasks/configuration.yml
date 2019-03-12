@@ -12,6 +12,11 @@
     repo: https://github.com/robbyrussell/oh-my-zsh.git
     dest: "{{general.local_home}}/.oh-my-zsh"
 
+- name: "[TMUX]: Install Tmux Plugin Manager (TPM)"
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: "{{general.local_home}}/.tmux/plugins/tpm"
+
 - name: getting Hhighlight
   git:
     repo: https://github.com/paoloantinori/hhighlighter.git
