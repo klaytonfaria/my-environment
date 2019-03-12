@@ -22,18 +22,6 @@
     repo: https://github.com/paoloantinori/hhighlighter.git
     dest: "{{general.setup_dir}}/h"
 
-- name: getting up vim-plug
-  git:
-    repo: https://github.com/junegunn/vim-plug.git
-    dest: "{{general.setup_dir}}/vim-plug"
-
-- name: creating directories
-  file:
-    path: "{{general.local_home}}/{{item}}"
-    state: directory
-  with_items:
-    - autoload
-
 - name: setting up symlinks
   file:
     src: "{{general.setup_dir}}/{{item.dest}}"
@@ -41,5 +29,4 @@
     state: link
     force: yes
   with_items:
-    - { path: 'vim-plug/plug.vim', dest: 'autoload/plug.vim' }
     - { path: 'h/h.sh', dest: 'h.sh' }
