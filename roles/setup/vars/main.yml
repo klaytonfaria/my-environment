@@ -46,6 +46,7 @@ node_modules:
   - react-native
   - react-native-cli
   - spaceship-prompt
+  - typescript
 
 # homebrew cask applications
 cask_applications:
