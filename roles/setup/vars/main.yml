@@ -63,6 +63,7 @@ cask_applications:
   - gitx
   - grammarly
   - google-chrome
+  - imageoptim
   - insomnia
   - iterm2  
   - numi
