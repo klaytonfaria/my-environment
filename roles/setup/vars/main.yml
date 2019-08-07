@@ -65,7 +65,8 @@ cask_applications:
   - google-chrome
   - imageoptim
   - insomnia
-  - iterm2  
+  - iterm2
+  - nmap
   - numi
   - react-native-debugger
   - rowanj-gitx
