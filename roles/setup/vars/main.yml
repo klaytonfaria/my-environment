@@ -61,6 +61,7 @@ cask_applications:
   - evernote
   - fork
   - frappe
+  - fing
   - gitx
   - grammarly
   - google-chrome
