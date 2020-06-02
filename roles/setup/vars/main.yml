@@ -24,6 +24,7 @@ applications:
   - python3
   - reattach-to-user-namespace
   - tmux
+  - tokei
   - translate-shell
   - tree
   - vim
