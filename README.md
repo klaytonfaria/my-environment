@@ -1,22 +1,42 @@
 ![Virtual environment](https://github.com/klaytonfaria/my-environment/workflows/Virtual%20environment/badge.svg?branch=master)  [![Build Status](https://travis-ci.org/klaytonfaria/my-environment.svg?branch=master)](https://travis-ci.org/klaytonfaria/my-environment)
 
-### Mac environment setup
+# My MacOS setup
 
-[Ansible](https://www.ansible.com/) playbook to quickly setup my Mac dev environment.
+We can agree that it is a bit boring every time we make that picking of tools and downloads to prepare our MacOS with all tools that we love. Sometimes we spend the whole day doing that, right? But with this [Ansible](https://www.ansible.com/) playbook, I can quickly set up my MacOS environment with my favorite tools and be happy.
 
-Running with Vagrant to test:
+### Using Vagrant to run local and test the setup:
 ```
 vagrant up --provision
 ```
 
-Running ansible directly:
+### Running Ansible:
+☕️ 🍪 This playbook spend 20-30 min in average... Let's drink a coffee and eat a cookie.
 ```
 ansible-playbook -i ./hosts playbook.yml --verbose
 ```
 
-List of applications can be updated [here](https://raw.githubusercontent.com/klaytonfaria/my-environment/master/roles/setup/vars/main.yml).
+### 📜 The list
+This is the list of some of the main apps and modules that I use. But could be changed [here](https://raw.githubusercontent.com/klaytonfaria/my-environment/master/roles/setup/vars/main.yml).
 
-### homebrew applications
+
+#### Global Node modules
+
+  - vtop
+  - webpack
+  - chance-cli
+  - chance
+  - eslint
+  - commitizen
+  - gnomon
+  - lerna
+  - nodemon
+  - react-native
+  - react-native-cli
+  - spaceship-prompt
+  - typescript
+
+
+#### Homebrew Formulae
 
   - ack
   - apktool
@@ -43,23 +63,7 @@ List of applications can be updated [here](https://raw.githubusercontent.com/kla
   - zsh
   - zsh-completions
 
-### Global node modules
-
-  - vtop
-  - webpack
-  - chance-cli
-  - chance
-  - eslint
-  - commitizen
-  - gnomon
-  - lerna
-  - nodemon
-  - react-native
-  - react-native-cli
-  - spaceship-prompt
-  - typescript
-
-### homebrew cask applications
+#### Cask applications
 
   - 1password
   - alfred
