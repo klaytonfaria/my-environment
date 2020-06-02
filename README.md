@@ -1,4 +1,4 @@
-![Virtual environment](https://github.com/klaytonfaria/my-environment/workflows/Virtual%20environment/badge.svg?branch=master)  [![Build Status](https://travis-ci.org/klaytonfaria/my-environment.svg?branch=master)](https://travis-ci.org/klaytonfaria/my-environment)
+[![Virtual environment](https://github.com/klaytonfaria/my-environment/workflows/Virtual%20environment/badge.svg?branch=master)](https://github.com/klaytonfaria/my-environment/actions)  [![Build Status](https://travis-ci.org/klaytonfaria/my-environment.svg?branch=master)](https://travis-ci.org/klaytonfaria/my-environment)
 
 # My MacOS setup
 
