@@ -4,20 +4,32 @@
 
 We can agree that it is a bit boring every time we make that picking of tools and downloads to prepare our MacOS with all tools that we love. Sometimes we spend the whole day doing that, right? But with this [Ansible](https://www.ansible.com/) playbook, I can quickly set up my MacOS environment with my favorite tools and be happy.
 
-### Using Vagrant to run local and test the setup:
+### Using Vagrant to run and test the setup in a virtual environment:
 ```
 vagrant up --provision
 ```
 
 ### Running Ansible:
 ☕️ 🍪 This playbook spend 20-30 min in average... Let's drink a coffee and eat a cookie.
+
+**By Ansible:**
 ```
 ansible-playbook -i ./hosts playbook.yml --verbose
 ```
 
+
+**By Shell script:**
+This [script](https://github.com/klaytonfaria/my-environment/blob/master/start.sh) install Ansible and runs the playbook.
+```
+sh ./start.sh
+```
+
+
 ### 📜 The list
 This is the list of some of the main apps and modules that I use. But could be changed [here](https://raw.githubusercontent.com/klaytonfaria/my-environment/master/roles/setup/vars/main.yml).
 
+<details>
+  <summary>Click to expand the list.</summary>
 
 #### Global Node modules
 
@@ -94,3 +106,5 @@ This is the list of some of the main apps and modules that I use. But could be c
   - ticktick
   - visual-studio-code-insiders
   - xmind-zen
+
+</details>
