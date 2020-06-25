@@ -43,6 +43,7 @@ node_modules:
   - commitizen
   - gnomon
   - lerna
+  - moro
   - nodemon
   - react-native
   - react-native-cli

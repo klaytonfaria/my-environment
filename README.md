@@ -41,6 +41,7 @@ This is the list of some of the main apps and modules that I use. But could be c
   - commitizen
   - gnomon
   - lerna
+  - moro
   - nodemon
   - react-native
   - react-native-cli
