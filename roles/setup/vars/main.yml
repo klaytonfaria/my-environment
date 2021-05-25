@@ -11,7 +11,6 @@ applications:
   - ack
   - apktool
   - ccat
-  - ccat
   - cmatrix
   - fzf
   - git
@@ -45,8 +44,7 @@ node_modules:
   - lerna
   - moro
   - nodemon
-  - react-native
-  - react-native-cli
+  - npm-check-updates
   - spaceship-prompt
   - typescript
 
@@ -54,31 +52,25 @@ node_modules:
 cask_applications:
   - 1password
   - alfred
-  - android-studio
   - caffeine
-  - charles
   - discord
   - docker
   - evernote
   - fork
-  - frappe
-  - fing
-  - gitx
   - grammarly
   - google-chrome
   - imageoptim
   - insomnia
   - iterm2
+  - jetbrains-toolbox
   - nmap
-  - numi
-  - react-native-debugger
-  - rowanj-gitx
+  - obsidian
+  - pocket-casts
+  - setapp
   - skype
   - slack
   - spectacle
-  - spectrum
   - spotify
   - telegram
   - ticktick
   - visual-studio-code-insiders
-  - xmind-zen
