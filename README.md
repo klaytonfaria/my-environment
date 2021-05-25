@@ -5,9 +5,10 @@
 We can agree that it is a bit boring every time we make that picking of tools and downloads to prepare our MacOS with all tools that we love. Sometimes we spend the whole day doing that, right? But with this [Ansible](https://www.ansible.com/) playbook, I can quickly set up my MacOS environment with my favorite tools and be happy.
 
 ### Running
+After cloning the repository, go to the folder and run:
 
 ```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/klaytonfaria/my-environment/master/start.sh)"
+sh ./start.sh
 ```
 
 ### Using Vagrant to run and test the setup in a virtual environment:
