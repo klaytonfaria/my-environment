@@ -3,7 +3,8 @@
 echo "Starting the mac setup"
 echo "==========================================="
 
-sudo easy_install pip
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py --user
 python -m pip install --user ansible
 ansible-playbook -i ./hosts playbook.yml
 
