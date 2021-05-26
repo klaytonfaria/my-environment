@@ -55,6 +55,7 @@ cask_applications:
   - caffeine
   - discord
   - docker
+  - flutter
   - evernote
   - fork
   - grammarly
