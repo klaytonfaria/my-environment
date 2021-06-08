@@ -10,7 +10,9 @@ general:
 applications:
   - ack
   - apktool
+  - bat
   - ccat
+  - ctop
   - cmatrix
   - fzf
   - git
@@ -27,7 +29,8 @@ applications:
   - translate-shell
   - tree
   - vim
-  - watchman
+  - yarn
+  - yarn-completion
   - zplug
   - zsh
   - zsh-completions
@@ -55,6 +58,7 @@ cask_applications:
   - caffeine
   - discord
   - docker
+  - figma
   - flutter
   - evernote
   - fork
@@ -64,6 +68,7 @@ cask_applications:
   - insomnia
   - iterm2
   - jetbrains-toolbox
+  - miro
   - nmap
   - obsidian
   - pocket-casts
@@ -75,3 +80,4 @@ cask_applications:
   - telegram
   - ticktick
   - visual-studio-code-insiders
+  - zoom
