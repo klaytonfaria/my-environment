@@ -1,8 +1,5 @@
 ---
 
-- name: Check homebrew
-  include: homebrew.yml
-
 - name: Install homebrew applications
   homebrew:
     name: "{{applications}}"
