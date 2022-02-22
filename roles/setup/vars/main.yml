@@ -18,6 +18,7 @@ applications:
   - git
   - gti
   - highlight
+  - libimobiledevice
   - jq
   - node
   - pidcat
