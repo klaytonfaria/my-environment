@@ -11,13 +11,17 @@ applications:
   - ack
   - apktool
   - bat
+  - bpytop
   - ccat
   - ctop
   - cmatrix
+  - fastlane
+  - fvm
   - fzf
   - git
   - gti
   - highlight
+  - idb-companion
   - libimobiledevice
   - jq
   - node
@@ -25,6 +29,7 @@ applications:
   - pngquant
   - python3
   - reattach-to-user-namespace
+  - scrcpy
   - tmux
   - tokei
   - translate-shell
@@ -71,6 +76,7 @@ cask_applications:
   - jetbrains-toolbox
   - miro
   - nmap
+  - ngrok
   - obsidian
   - pocket-casts
   - setapp
