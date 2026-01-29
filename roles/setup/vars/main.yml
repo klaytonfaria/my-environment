@@ -1,90 +1,14 @@
 ---
+# This file is kept for backward compatibility but variables have been split
+# The actual loading happens in the playbook or tasks
 
-# Global settings
-general:
-  local_home: "{{ lookup('env','HOME') }}"
-  setup_dir: "{{ lookup('env','HOME') }}/mac-setup"
-  temp_dir: "{{ lookup('env','HOME') }}/.mac-setup/tmp"
-
-# homebrew applications
-applications:
-  - ack
-  - apktool
-  - bat
-  - bpytop
-  - ccat
-  - ctop
-  - cmatrix
-  - fastlane
-  - fvm
-  - fzf
-  - git
-  - gti
-  - highlight
-  - idb-companion
-  - libimobiledevice
-  - jq
-  - node
-  - pidcat
-  - pngquant
-  - python3
-  - reattach-to-user-namespace
-  - scrcpy
-  - tmux
-  - tokei
-  - translate-shell
-  - tree
-  - vim
-  - yarn
-  - yarn-completion
-  - zplug
-  - zsh
-  - zsh-completions
-
-# Global node modules
-node_modules:
-  - vtop
-  - webpack
-  - chance-cli
-  - chance
-  - eslint
-  - commitizen
-  - gnomon
-  - lerna
-  - moro
-  - nodemon
-  - npm-check-updates
-  - spaceship-prompt
-  - typescript
-
-# homebrew cask applications
-cask_applications:
-  - 1password
-  - alfred
-  - caffeine
-  - discord
-  - docker
-  - figma
-  - flutter
-  - evernote
-  - fork
-  - grammarly
-  - google-chrome
-  - imageoptim
-  - insomnia
-  - iterm2
-  - jetbrains-toolbox
-  - miro
-  - nmap
-  - ngrok
-  - obsidian
-  - pocket-casts
-  - setapp
-  - skype
-  - slack
-  - spectacle
-  - spotify
-  - telegram
-  - ticktick
-  - visual-studio-code-insiders
-  - zoom
+# You can still define shared variables here if needed
+shared_config:
+  ansible_user: "{{ lookup('env','USER') }}"
+  
+# Note: Variables are now organized in:
+# - homebrew.yml: Homebrew packages and casks
+# - node.yml: Node.js packages
+# - python.yml: Python packages  
+# - paths.yml: Directory paths and repository URLs
+# - local.yml: User-specific overrides (gitignored)

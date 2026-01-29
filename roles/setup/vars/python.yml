@@ -1,0 +1,17 @@
+---
+# Python packages (installed via pip3)
+python_packages:
+  - ansible-lint
+  - black  # Code formatter
+  - flake8  # Linter
+  - ipython  # Better Python REPL
+  - pipenv  # Virtual environment manager
+  - poetry  # Dependency manager
+  - pre-commit  # Git hooks
+  - pylint  # Linter
+  - pytest  # Testing framework
+  - requests  # HTTP library
+  - virtualenv  # Virtual environments
+
+# Python version (via asdf)
+python_version: "3.11"  # or "latest"
