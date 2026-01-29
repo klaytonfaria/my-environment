@@ -61,18 +61,15 @@
   changed_when: false
   failed_when: false
 
-- name: Install Python packages
-  ansible.builtin.pip:
-    name: "{{ setup_python_packages }}"
-    state: present
-    executable: pip3
+- name: Install Python packages via pip3  # noqa command-instead-of-module
+  ansible.builtin.command: pip3 install {{ item }}
+  loop: "{{ setup_python_packages }}"
   when:
     - setup_python_check.rc == 0
     - setup_features.install_python_packages | default(true)
   register: setup_pip_install
-  retries: 2
-  delay: 3
-  until: setup_pip_install is succeeded
+  changed_when: "'Successfully installed' in setup_pip_install.stdout"
+  failed_when: false
 
 - name: Display installation summary
   ansible.builtin.debug:
