@@ -1,0 +1,30 @@
+---
+# Handlers for the setup role
+
+- name: reload shell
+  ansible.builtin.debug:
+    msg: "Shell configuration updated. Please restart your terminal or run: exec $SHELL"
+  listen: "shell config changed"
+
+- name: tmux reload config
+  ansible.builtin.shell: tmux source-file ~/.tmux.conf
+  listen: "tmux config changed"
+  failed_when: false
+  changed_when: false
+
+- name: vim reload plugins
+  ansible.builtin.debug:
+    msg: "Vim configuration updated. Run :PlugInstall in vim to install plugins."
+  listen: "vim config changed"
+
+- name: restart dock
+  ansible.builtin.command: killall Dock
+  listen: "restart dock"
+  failed_when: false
+  changed_when: false
+
+- name: restart finder
+  ansible.builtin.command: killall Finder
+  listen: "restart finder"
+  failed_when: false
+  changed_when: false

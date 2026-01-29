@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Klayton Faria
+  description: MacOS development environment setup
+  company: Personal
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: MacOSX
+      versions:
+        - all
+  galaxy_tags:
+    - macos
+    - development
+    - setup
+    - automation
+
+dependencies: []
