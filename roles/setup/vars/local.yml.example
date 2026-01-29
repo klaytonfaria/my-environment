@@ -1,0 +1,30 @@
+---
+# Local configuration overrides
+# Copy this file to local.yml and customize as needed
+# local.yml is gitignored and won't be committed
+
+# Example: Override which apps to install
+# homebrew_packages:
+#   - git
+#   - node
+#   - docker
+
+# Example: Override cask applications
+# homebrew_casks:
+#   - visual-studio-code
+#   - google-chrome
+#   - slack
+
+# Example: Override node packages
+# node_packages:
+#   - typescript
+#   - eslint
+
+# Example: Disable certain features
+# features:
+#   install_node_modules: false
+#   configure_system_preferences: true
+
+# Example: Custom paths
+# general:
+#   setup_dir: "{{ lookup('env','HOME') }}/custom-setup"

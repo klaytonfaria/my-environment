@@ -1,5 +1,24 @@
 ---
-- hosts: all
+- name: MacOS Development Environment Setup
+  hosts: all
   connection: local
+  gather_facts: true
+
   roles:
     - setup
+
+  post_tasks:
+    - name: Final setup message
+      ansible.builtin.debug:
+        msg:
+          - "=========================================="
+          - "MacOS Environment Setup Complete!"
+          - "=========================================="
+          - ""
+          - "Next steps:"
+          - "1. Restart your terminal to apply shell changes"
+          - "2. Check the installation report: ~/mac-setup/INSTALL_REPORT.txt"
+          - "3. If you backed up configs, they are in: ~/.mac-setup-backup/"
+          - ""
+          - "Optional: Run 'make system' to configure macOS system preferences"
+          - "=========================================="

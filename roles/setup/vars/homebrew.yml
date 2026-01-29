@@ -1,0 +1,80 @@
+---
+# Homebrew formulae (CLI tools)
+setup_homebrew_packages:
+  - ack
+  - apktool
+  - asdf  # Universal version manager (replaces nvm, rbenv, etc.)
+  - awscli  # AWS CLI
+  - bat  # Better cat
+  - bpytop  # Resource monitor
+  - ccat
+  - ctop  # Container top
+  - cmatrix  # Matrix screensaver
+  - delta  # Better diff viewer
+  - eza  # Better ls (exa was renamed)
+  - fastlane
+  - fd  # Better find
+  - fzf  # Fuzzy finder
+  - gh  # GitHub CLI
+  - git
+  - gti  # Git typo helper
+  - highlight
+  - jq  # JSON processor
+  - kubectl  # Kubernetes CLI
+  - libimobiledevice
+  - node
+  - pidcat
+  - pngquant
+  - python3
+  - reattach-to-user-namespace
+  - ripgrep  # Better grep
+  - scrcpy
+  - shellcheck  # Shell script linter
+  - terraform  # Infrastructure as code
+  - tmux
+  - tokei  # Code statistics
+  - translate-shell
+  - tree
+  - vim
+  - yarn
+  - yarn-completion
+  - zoxide  # Better cd
+  - zplug
+  - zsh
+  - zsh-completions
+
+# Homebrew cask applications (GUI apps)
+setup_homebrew_casks:
+  - 1password
+  - alfred
+  - caffeine
+  - discord
+  - docker
+  - figma
+  - flutter
+  - evernote
+  - fork
+  - google-chrome
+  - grammarly
+  - imageoptim
+  - insomnia
+  - iterm2
+  - jetbrains-toolbox
+  - miro
+  - ngrok
+  - nmap
+  - obsidian
+  - pocket-casts
+  - rectangle  # Replaced spectacle (deprecated)
+  - setapp
+  - skype
+  - slack
+  - spotify
+  - telegram
+  - ticktick
+  - visual-studio-code
+  - zoom
+
+# Shared configuration
+setup_shared_config:
+  update_homebrew: true

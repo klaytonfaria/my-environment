@@ -1,21 +1,80 @@
 ---
+- name: Set Homebrew prefix based on architecture
+  ansible.builtin.set_fact:
+    setup_brew_prefix: "{{ '/opt/homebrew' if ansible_machine == 'arm64' else '/usr/local' }}"
 
-- name: Install homebrew applications
-  homebrew:
-    name: "{{applications}}"
-    state: latest
-  ignore_errors: True
+- name: Ensure Homebrew is installed
+  ansible.builtin.stat:
+    path: "{{ setup_brew_prefix }}/bin/brew"
+  register: setup_homebrew_check
+  failed_when: not setup_homebrew_check.stat.exists
 
-- name: Install homebrew cask applications
-  homebrew_cask:
-    name: "{{item}}"
-    state: "present"
-  with_items: "{{cask_applications}}"
-  ignore_errors: True
+- name: Update Homebrew
+  community.general.homebrew:
+    update_homebrew: true
+  changed_when: false
 
-- name: Install node packages globally.
-  npm:
-    name: "{{item}}"
-    state: "present"
-  with_items: "{{node_modules}}"
-  ignore_errors: True
+- name: Install Homebrew packages
+  community.general.homebrew:
+    name: "{{ setup_homebrew_packages }}"
+    state: "{{ 'latest' if setup_install_behavior.allow_upgrade | default(false) else 'present' }}"
+  register: setup_brew_install
+  retries: 3
+  delay: 5
+  until: setup_brew_install is succeeded
+
+- name: Install Homebrew cask applications
+  community.general.homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ setup_homebrew_casks }}"
+  register: setup_cask_install
+  retries: 2
+  delay: 3
+  until: setup_cask_install is succeeded
+  failed_when: false  # Some casks may already be installed manually
+
+- name: Check if Node.js is available
+  ansible.builtin.command: which node
+  register: setup_node_check
+  changed_when: false
+  failed_when: false
+
+- name: Install global Node.js packages
+  community.general.npm:
+    name: "{{ item }}"
+    state: present
+    global: true
+  loop: "{{ setup_node_packages }}"
+  when:
+    - setup_node_check.rc == 0
+    - setup_features.install_node_modules | default(true)
+  register: setup_npm_install
+  retries: 2
+  delay: 3
+  until: setup_npm_install is succeeded
+  failed_when: false
+
+- name: Check if Python3 is available
+  ansible.builtin.command: which python3
+  register: setup_python_check
+  changed_when: false
+  failed_when: false
+
+- name: Install Python packages via pip3  # noqa command-instead-of-module
+  ansible.builtin.command: pip3 install {{ item }}
+  loop: "{{ setup_python_packages }}"
+  when:
+    - setup_python_check.rc == 0
+    - setup_features.install_python_packages | default(true)
+  register: setup_pip_install
+  changed_when: "'Successfully installed' in setup_pip_install.stdout"
+  failed_when: false
+
+- name: Display installation summary
+  ansible.builtin.debug:
+    msg:
+      - "Homebrew packages: {{ setup_homebrew_packages | length }} installed"
+      - "Cask applications: {{ setup_homebrew_casks | length }} installed"
+      - "Node packages: {{ setup_node_packages | length if setup_node_check.rc == 0 else 0 }} installed"
+      - "Python packages: {{ setup_python_packages | length if setup_python_check.rc == 0 else 0 }} installed"

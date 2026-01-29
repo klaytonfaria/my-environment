@@ -1,0 +1,171 @@
+---
+# macOS system preferences automation
+# These are optional and require user consent
+# Run with: ansible-playbook playbook.yml --tags system
+
+- name: Display system preferences warning
+  ansible.builtin.pause:
+    prompt: |
+
+      This will modify macOS system preferences including:
+      - Dock settings
+      - Finder preferences
+      - Keyboard and trackpad settings
+      - Energy and screen settings
+
+      Press ENTER to continue or Ctrl+C to skip
+    seconds: 5
+
+# Dock preferences
+- name: Set Dock icon size
+  community.general.osx_defaults:
+    domain: com.apple.dock
+    key: tilesize
+    type: int
+    value: 48
+  notify: restart dock
+
+- name: Enable Dock autohide
+  community.general.osx_defaults:
+    domain: com.apple.dock
+    key: autohide
+    type: bool
+    value: true
+  notify: restart dock
+
+- name: Set Dock autohide delay
+  community.general.osx_defaults:
+    domain: com.apple.dock
+    key: autohide-delay
+    type: float
+    value: 0.2
+  notify: restart dock
+
+- name: Minimize windows into application icon
+  community.general.osx_defaults:
+    domain: com.apple.dock
+    key: minimize-to-application
+    type: bool
+    value: true
+  notify: restart dock
+
+# Finder preferences
+- name: Show hidden files in Finder
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: AppleShowAllFiles
+    type: bool
+    value: true
+  notify: restart finder
+
+- name: Show file extensions in Finder
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleShowAllExtensions
+    type: bool
+    value: true
+  notify: restart finder
+
+- name: Show path bar in Finder
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: ShowPathbar
+    type: bool
+    value: true
+  notify: restart finder
+
+- name: Show status bar in Finder
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: ShowStatusBar
+    type: bool
+    value: true
+  notify: restart finder
+
+- name: Set default Finder view to list view
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: FXPreferredViewStyle
+    type: string
+    value: "Nlsv"
+  notify: restart finder
+
+# Keyboard and input preferences
+- name: Enable full keyboard access for all controls
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleKeyboardUIMode
+    type: int
+    value: 3
+
+- name: Set fast key repeat rate
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: KeyRepeat
+    type: int
+    value: 2
+
+- name: Set short delay until key repeat
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: InitialKeyRepeat
+    type: int
+    value: 15
+
+# Screen and energy settings
+- name: Require password immediately after sleep
+  community.general.osx_defaults:
+    domain: com.apple.screensaver
+    key: askForPassword
+    type: int
+    value: 1
+
+- name: Set screen saver delay (seconds)
+  community.general.osx_defaults:
+    domain: com.apple.screensaver
+    key: askForPasswordDelay
+    type: int
+    value: 0
+
+# Screenshot settings
+- name: Save screenshots to Pictures folder
+  community.general.osx_defaults:
+    domain: com.apple.screencapture
+    key: location
+    type: string
+    value: "{{ setup_general.local_home }}/Pictures/Screenshots"
+
+- name: Create Screenshots directory
+  ansible.builtin.file:
+    path: "{{ setup_general.local_home }}/Pictures/Screenshots"
+    state: directory
+    mode: '0755'
+
+- name: Save screenshots in PNG format
+  community.general.osx_defaults:
+    domain: com.apple.screencapture
+    key: type
+    type: string
+    value: "png"
+
+- name: Disable screenshot shadow
+  community.general.osx_defaults:
+    domain: com.apple.screencapture
+    key: disable-shadow
+    type: bool
+    value: true
+
+# Trackpad preferences
+- name: Enable tap to click
+  community.general.osx_defaults:
+    domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+    key: Clicking
+    type: bool
+    value: true
+
+- name: Display system preferences summary
+  ansible.builtin.debug:
+    msg:
+      - "System preferences have been configured"
+      - "Some changes require logging out and back in to take effect"
+      - "Dock and Finder will restart automatically"

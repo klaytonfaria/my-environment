@@ -1,0 +1,19 @@
+---
+# Path and directory configurations
+
+setup_general:
+  local_home: "{{ lookup('env', 'HOME') }}"
+  setup_dir: "{{ lookup('env', 'HOME') }}/mac-setup"
+  temp_dir: "{{ lookup('env', 'HOME') }}/.mac-setup/tmp"
+  backup_dir: "{{ lookup('env', 'HOME') }}/.mac-setup-backup/{{ ansible_date_time.iso8601_basic_short }}"
+
+# Repository URLs
+setup_repositories:
+  oh_my_zsh: "https://github.com/ohmyzsh/ohmyzsh.git"
+  tmux_plugin_manager: "https://github.com/tmux-plugins/tpm"
+  hhighlighter: "https://github.com/paoloantinori/hhighlighter.git"
+  dotfiles: "https://github.com/klaytonfaria/dotfiles.git"
+  asdf: "https://github.com/asdf-vm/asdf.git"
+
+# ASDF version
+setup_asdf_version: "v0.14.0"  # Latest stable version
