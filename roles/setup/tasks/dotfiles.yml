@@ -1,51 +1,78 @@
 ---
+- name: Check if iTerm2 is installed
+  ansible.builtin.stat:
+    path: "/Applications/iTerm.app"
+  register: iterm_check
 
-- name: Ensuring Iterm Is Installed
-  stat:
-    path: "/usr/local/bin/iterm"
-  register: "iterm_check"
+- name: Clone dotfiles repository
+  ansible.builtin.git:
+    repo: "{{ repositories.dotfiles }}"
+    dest: "{{ general.setup_dir }}/dotfiles"
+    update: true
+  register: dotfiles_clone
 
-- name: setting up my dotfiles
-  git:
-    repo: https://github.com/klaytonfaria/dotfiles.git
-    dest: "{{general.setup_dir}}/dotfiles"
-  ignore_errors: True
+- name: Backup existing dotfiles
+  ansible.builtin.copy:
+    src: "{{ general.local_home }}/{{ item }}"
+    dest: "{{ general.backup_dir }}/{{ item }}"
+    remote_src: true
+    mode: preserve
+  loop:
+    - .zshrc
+    - .vimrc
+    - .tmux.conf
+    - .thymerc
+  when: install_behavior.create_backup | default(true)
+  failed_when: false
 
-- name: zsh
-  file:
-    src: "{{general.setup_dir}}/dotfiles/zsh/.zshrc"
-    dest: "{{general.local_home}}/.zshrc"
+- name: Create symlink for zsh configuration
+  ansible.builtin.file:
+    src: "{{ general.setup_dir }}/dotfiles/zsh/.zshrc"
+    dest: "{{ general.local_home }}/.zshrc"
     state: link
-  ignore_errors: True
+    force: true
+  notify: shell config changed
 
-- name: vim
-  file:
-    src: "{{general.setup_dir}}/dotfiles/vim/.vimrc"
-    dest: "{{general.local_home}}/.vimrc"
+- name: Create symlink for vim configuration
+  ansible.builtin.file:
+    src: "{{ general.setup_dir }}/dotfiles/vim/.vimrc"
+    dest: "{{ general.local_home }}/.vimrc"
     state: link
-  ignore_errors: True
+    force: true
+  notify: vim config changed
 
-- name: tmux
-  file:
-    src: "{{general.setup_dir}}/dotfiles/tmux/.tmux.conf"
-    dest: "{{general.local_home}}/.tmux.conf"
+- name: Create symlink for tmux configuration
+  ansible.builtin.file:
+    src: "{{ general.setup_dir }}/dotfiles/tmux/.tmux.conf"
+    dest: "{{ general.local_home }}/.tmux.conf"
     state: link
-  ignore_errors: True
+    force: true
+  notify: tmux config changed
 
-
-- name: thyme
-  file:
-    src: "{{general.setup_dir}}/dotfiles/thyme/.thymerc"
-    dest: "{{general.local_home}}/.thymerc"
+- name: Create symlink for thyme configuration
+  ansible.builtin.file:
+    src: "{{ general.setup_dir }}/dotfiles/thyme/.thymerc"
+    dest: "{{ general.local_home }}/.thymerc"
     state: link
+    force: true
   when: iterm_check.stat.exists
-  ignore_errors: True
 
-- name: iterm utilities
-  command: cp -r {{general.setup_dir}}/dotfiles/iterm/iterm2/{{ item }} {{general.local_home}}/.iterm2
-  with_items:
+- name: Create iTerm2 utilities directory
+  ansible.builtin.file:
+    path: "{{ general.local_home }}/.iterm2"
+    state: directory
+    mode: '0755'
+  when: iterm_check.stat.exists
+
+- name: Copy iTerm2 utilities
+  ansible.builtin.copy:
+    src: "{{ general.setup_dir }}/dotfiles/iterm/iterm2/{{ item }}"
+    dest: "{{ general.local_home }}/.iterm2/{{ item }}"
+    remote_src: true
+    mode: '0755'
+  loop:
     - imgcat
     - imgls
     - it2dl
   when: iterm_check.stat.exists
-  ignore_errors: True
+  failed_when: false

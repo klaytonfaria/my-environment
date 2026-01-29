@@ -1,32 +1,53 @@
 ---
-# doing configuration
+- name: Create setup directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ general.setup_dir }}"
+    - "{{ general.temp_dir }}"
+    - "{{ general.backup_dir }}"
 
-- name: add nvm setup
-  shell: >
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-  args:
-    creates: "{{general.local_home}}/.nvm/nvm.sh"
+- name: Install asdf version manager
+  ansible.builtin.git:
+    repo: "{{ repositories.asdf }}"
+    dest: "{{ general.local_home }}/.asdf"
+    version: "{{ asdf_version }}"
+    update: true
+  register: asdf_install
 
-- name: setting up zsh with oh-my-zsh
-  git:
-    repo: https://github.com/robbyrussell/oh-my-zsh.git
-    dest: "{{general.local_home}}/.oh-my-zsh"
+- name: Install oh-my-zsh
+  ansible.builtin.git:
+    repo: "{{ repositories.oh_my_zsh }}"
+    dest: "{{ general.local_home }}/.oh-my-zsh"
+    depth: 1
+    update: false
+  register: omz_install
 
-- name: "[TMUX]: Install Tmux Plugin Manager (TPM)"
-  git:
-    repo: https://github.com/tmux-plugins/tpm
-    dest: "{{general.local_home}}/.tmux/plugins/tpm"
+- name: Install Tmux Plugin Manager (TPM)
+  ansible.builtin.git:
+    repo: "{{ repositories.tmux_plugin_manager }}"
+    dest: "{{ general.local_home }}/.tmux/plugins/tpm"
+    depth: 1
+    update: true
 
-- name: getting Hhighlight
-  git:
-    repo: https://github.com/paoloantinori/hhighlighter.git
-    dest: "{{general.setup_dir}}/h"
+- name: Install Hhighlighter
+  ansible.builtin.git:
+    repo: "{{ repositories.hhighlighter }}"
+    dest: "{{ general.setup_dir }}/h"
+    update: true
 
-- name: setting up symlinks
-  file:
-    src: "{{general.setup_dir}}/{{item.dest}}"
-    dest: "{{general.local_home}}/{{item.dest}}"
+- name: Create symlink for h.sh
+  ansible.builtin.file:
+    src: "{{ general.setup_dir }}/h/h.sh"
+    dest: "{{ general.local_home }}/h.sh"
     state: link
-    force: yes
-  with_items:
-    - { path: 'h/h.sh', dest: 'h.sh' }
+    force: true
+  when: general.setup_dir is defined
+
+- name: Notify shell configuration change
+  ansible.builtin.debug:
+    msg: "Shell configuration has been updated"
+  changed_when: omz_install.changed or asdf_install.changed
+  notify: shell config changed

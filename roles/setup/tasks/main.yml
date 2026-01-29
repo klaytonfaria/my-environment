@@ -1,8 +1,58 @@
-- name: application installs
-  include_tasks: apps.yml
+---
+- name: Load configuration variables
+  tags: always
+  block:
+    - name: Load paths configuration
+      ansible.builtin.include_vars: paths.yml
 
-- name: configuration
-  include_tasks: configuration.yml
+    - name: Load Homebrew packages
+      ansible.builtin.include_vars: homebrew.yml
 
-- name: dotfiles
-  include_tasks: dotfiles.yml
+    - name: Load Node.js configuration
+      ansible.builtin.include_vars: node.yml
+
+    - name: Load Python configuration
+      ansible.builtin.include_vars: python.yml
+
+    - name: Load local overrides if present
+      ansible.builtin.include_vars: local.yml
+      failed_when: false
+
+- name: Display setup information
+  tags: always
+  ansible.builtin.debug:
+    msg: "Starting MacOS setup for {{ ansible_distribution }} {{ ansible_distribution_version }}"
+
+- name: Application installs
+  tags: [apps, install]
+  ansible.builtin.include_tasks: apps.yml
+  when: features.install_apps | default(true)
+
+- name: Configuration setup
+  tags: [config, configuration]
+  ansible.builtin.include_tasks: configuration.yml
+  when: features.setup_configuration | default(true)
+
+- name: Dotfiles setup
+  tags: [dotfiles]
+  ansible.builtin.include_tasks: dotfiles.yml
+  when: features.setup_dotfiles | default(true)
+
+- name: Backup existing configurations
+  tags: [backup]
+  ansible.builtin.include_tasks: backup.yml
+  when: install_behavior.create_backup | default(true)
+
+- name: System preferences (optional)
+  tags: [system, preferences]
+  ansible.builtin.include_tasks: system-preferences.yml
+  when: features.configure_system_preferences | default(false)
+
+- name: Validation and health checks
+  tags: [validate, check]
+  ansible.builtin.include_tasks: validation.yml
+
+- name: Display completion message
+  tags: always
+  ansible.builtin.debug:
+    msg: "Setup complete! Please restart your terminal to apply all changes."

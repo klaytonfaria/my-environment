@@ -1,0 +1,112 @@
+---
+# Post-installation validation and health checks
+
+- name: Check Homebrew installation
+  ansible.builtin.command: brew --version
+  register: brew_version
+  changed_when: false
+  failed_when: brew_version.rc != 0
+
+- name: Run Homebrew doctor
+  ansible.builtin.command: brew doctor
+  register: brew_doctor
+  changed_when: false
+  failed_when: false
+
+- name: Check Git installation
+  ansible.builtin.command: git --version
+  register: git_version
+  changed_when: false
+  failed_when: git_version.rc != 0
+
+- name: Check Node.js installation
+  ansible.builtin.command: node --version
+  register: node_version
+  changed_when: false
+  failed_when: false
+
+- name: Check Python installation
+  ansible.builtin.command: python3 --version
+  register: python_version
+  changed_when: false
+  failed_when: false
+
+- name: Check npm installation
+  ansible.builtin.command: npm --version
+  register: npm_version
+  changed_when: false
+  failed_when: false
+  when: node_version.rc == 0
+
+- name: Check zsh installation
+  ansible.builtin.command: zsh --version
+  register: zsh_version
+  changed_when: false
+  failed_when: false
+
+- name: Verify oh-my-zsh installation
+  ansible.builtin.stat:
+    path: "{{ general.local_home }}/.oh-my-zsh"
+  register: omz_check
+
+- name: Verify dotfiles are symlinked
+  ansible.builtin.stat:
+    path: "{{ general.local_home }}/{{ item }}"
+  loop:
+    - .zshrc
+    - .vimrc
+    - .tmux.conf
+  register: dotfile_checks
+
+- name: Generate installation report
+  ansible.builtin.set_fact:
+    install_report:
+      homebrew: "{{ 'OK - ' + brew_version.stdout if brew_version.rc == 0 else 'NOT FOUND' }}"
+      git: "{{ 'OK - ' + git_version.stdout if git_version.rc == 0 else 'NOT FOUND' }}"
+      node: "{{ 'OK - ' + node_version.stdout if node_version.rc == 0 else 'NOT INSTALLED' }}"
+      python: "{{ 'OK - ' + python_version.stdout if python_version.rc == 0 else 'NOT INSTALLED' }}"
+      npm: "{{ 'OK - ' + npm_version.stdout if npm_version.rc == 0 else 'NOT INSTALLED' }}"
+      zsh: "{{ 'OK - ' + zsh_version.stdout if zsh_version.rc == 0 else 'NOT INSTALLED' }}"
+      oh_my_zsh: "{{ 'INSTALLED' if omz_check.stat.exists else 'NOT FOUND' }}"
+
+- name: Display installation report
+  ansible.builtin.debug:
+    msg:
+      - "=== Installation Validation Report ==="
+      - "Homebrew: {{ install_report.homebrew }}"
+      - "Git: {{ install_report.git }}"
+      - "Node.js: {{ install_report.node }}"
+      - "Python: {{ install_report.python }}"
+      - "npm: {{ install_report.npm }}"
+      - "Zsh: {{ install_report.zsh }}"
+      - "oh-my-zsh: {{ install_report.oh_my_zsh }}"
+      - ""
+      - "{{ 'Brew Doctor Issues:' if brew_doctor.rc != 0 else 'Brew Doctor: All OK' }}"
+      - "{{ brew_doctor.stdout if brew_doctor.rc != 0 else '' }}"
+
+- name: Save installation report to file
+  ansible.builtin.copy:
+    content: |
+      MacOS Environment Setup - Installation Report
+      Generated: {{ ansible_date_time.iso8601 }}
+      ============================================
+      
+      System Information:
+      - Hostname: {{ ansible_hostname }}
+      - OS: {{ ansible_distribution }} {{ ansible_distribution_version }}
+      - Architecture: {{ ansible_machine }}
+      - User: {{ ansible_user_id }}
+      
+      Installation Status:
+      - Homebrew: {{ install_report.homebrew }}
+      - Git: {{ install_report.git }}
+      - Node.js: {{ install_report.node }}
+      - Python: {{ install_report.python }}
+      - npm: {{ install_report.npm }}
+      - Zsh: {{ install_report.zsh }}
+      - oh-my-zsh: {{ install_report.oh_my_zsh }}
+      
+      Brew Doctor Output:
+      {{ brew_doctor.stdout if brew_doctor.stdout else 'No issues found' }}
+    dest: "{{ general.setup_dir }}/INSTALL_REPORT.txt"
+    mode: '0644'
