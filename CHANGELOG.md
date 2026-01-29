@@ -17,7 +17,7 @@ This is a complete modernization of the project with breaking changes for better
 - **Backup System**: Automatic backup of existing configurations before overwriting
 - **Validation**: Post-installation health checks and reporting
 - **System Preferences**: Optional macOS system preferences automation
-- **Modern CLI Tools**: Added ripgrep, fd, exa, delta, bat, gh, zoxide, and more
+- **Modern CLI Tools**: Added ripgrep, fd, eza, delta, bat, gh, zoxide, and more
 - **Python Support**: Added Python package management via pip
 - **asdf Version Manager**: Replaced nvm with unified version manager
 - **Uninstall Script**: Added comprehensive uninstall functionality

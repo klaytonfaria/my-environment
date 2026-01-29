@@ -41,7 +41,7 @@ make setup
 <summary><strong>Homebrew Packages (CLI Tools)</strong> - Click to expand</summary>
 
 - **Development Tools**: git, node, python3, yarn, asdf, gh (GitHub CLI)
-- **Modern CLI Tools**: bat, exa, fd, ripgrep, delta, fzf, zoxide
+- **Modern CLI Tools**: bat, eza, fd, ripgrep, delta, fzf, zoxide
 - **Container/Cloud**: docker (via cask), kubectl, terraform, awscli
 - **Utilities**: jq, tree, tmux, vim, translate-shell, tokei
 - **Monitoring**: bpytop, ctop

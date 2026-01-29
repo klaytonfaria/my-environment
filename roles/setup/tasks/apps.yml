@@ -1,7 +1,11 @@
 ---
+- name: Set Homebrew prefix based on architecture
+  ansible.builtin.set_fact:
+    brew_prefix: "{{ '/opt/homebrew' if ansible_machine == 'arm64' else '/usr/local' }}"
+
 - name: Ensure Homebrew is installed
   ansible.builtin.stat:
-    path: "{{ homebrew_prefix[ansible_machine] | default('/usr/local') }}/bin/brew"
+    path: "{{ brew_prefix }}/bin/brew"
   register: homebrew_check
   failed_when: not homebrew_check.stat.exists
   

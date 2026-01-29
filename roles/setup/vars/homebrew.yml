@@ -11,7 +11,7 @@ homebrew_packages:
   - ctop  # Container top
   - cmatrix  # Matrix screensaver
   - delta  # Better diff viewer
-  - exa  # Better ls
+  - eza  # Better ls (exa was renamed)
   - fastlane
   - fd  # Better find
   - fvm
