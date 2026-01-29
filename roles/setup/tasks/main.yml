@@ -23,6 +23,11 @@
   ansible.builtin.debug:
     msg: "Starting MacOS setup for {{ ansible_distribution }} {{ ansible_distribution_version }}"
 
+- name: Backup existing configurations
+  tags: [backup, dotfiles]
+  ansible.builtin.include_tasks: backup.yml
+  when: install_behavior.create_backup | default(true)
+
 - name: Application installs
   tags: [apps, install]
   ansible.builtin.include_tasks: apps.yml
@@ -38,11 +43,6 @@
   ansible.builtin.include_tasks: dotfiles.yml
   when: features.setup_dotfiles | default(true)
 
-- name: Backup existing configurations
-  tags: [backup]
-  ansible.builtin.include_tasks: backup.yml
-  when: install_behavior.create_backup | default(true)
-
 - name: System preferences (optional)
   tags: [system, preferences]
   ansible.builtin.include_tasks: system-preferences.yml
@@ -56,3 +56,4 @@
   tags: always
   ansible.builtin.debug:
     msg: "Setup complete! Please restart your terminal to apply all changes."
+

@@ -11,20 +11,6 @@
     update: true
   register: setup_dotfiles_clone
 
-- name: Backup existing dotfiles
-  ansible.builtin.copy:
-    src: "{{ general.local_home }}/{{ item }}"
-    dest: "{{ general.backup_dir }}/{{ item }}"
-    remote_src: true
-    mode: preserve
-  loop:
-    - .zshrc
-    - .vimrc
-    - .tmux.conf
-    - .thymerc
-  when: install_behavior.create_backup | default(true)
-  failed_when: false
-
 - name: Create symlink for zsh configuration
   ansible.builtin.file:
     src: "{{ general.setup_dir }}/dotfiles/zsh/.zshrc"
@@ -76,4 +62,5 @@
     - it2dl
   when: setup_iterm_check.stat.exists
   failed_when: false
+
 
