@@ -108,5 +108,5 @@
 
       Brew Doctor Output:
       {{ setup_brew_doctor.stdout if setup_brew_doctor.stdout else 'No issues found' }}
-        dest: "{{ setup_general.setup_dir }}/INSTALL_REPORT.txt"
+    dest: "{{ setup_general.setup_dir }}/INSTALL_REPORT.txt"
     mode: '0644'
