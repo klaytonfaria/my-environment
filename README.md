@@ -1,4 +1,4 @@
-[![MacOS Environment Setup CI](https://github.com/klaytonfaria/my-environment/workflows/MacOS%20Environment%20Setup%20CI/badge.svg?branch=main)](https://github.com/klaytonfaria/my-environment/actions)
+[![MacOS Environment Setup CI](https://github.com/klaytonfaria/my-environment/actions/workflows/mac-setup.yml/badge.svg)](https://github.com/klaytonfaria/my-environment/actions/workflows/mac-setup.yml)
 
 # MacOS Development Environment Setup
 
