@@ -1,24 +1,115 @@
-name: Virtual environment 
+name: MacOS Environment Setup CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+  workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: macos-latest
+  lint:
+    name: Lint Ansible Playbooks
+    runs-on: ubuntu-latest
     steps:
-    
-    - uses: actions/checkout@v2
-      
-    - uses: actions/cache@v2
-      name: Cache
-      with:
-        path: |
-          ~/.npm
-          ~/Library/Caches/pip
-          ~/Library/Caches/Homebrew
-        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Mac setup
-      run: sh ./start.sh
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible ansible-lint
+
+      - name: Run ansible-lint
+        run: ansible-lint playbook.yml roles/
+
+      - name: Check Ansible syntax
+        run: ansible-playbook playbook.yml --syntax-check
+
+  shellcheck:
+    name: Lint Shell Scripts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: './scripts'
+          severity: warning
+
+  test:
+    name: Test on macOS
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-12, macos-13, macos-14]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache Homebrew packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            /usr/local/Cellar
+            /opt/homebrew/Cellar
+          key: ${{ runner.os }}-${{ runner.arch }}-brew-${{ hashFiles('roles/setup/vars/homebrew.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-brew-
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Caches/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('roles/setup/vars/python.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Display system information
+        run: |
+          echo "OS: ${{ matrix.os }}"
+          echo "Architecture: $(uname -m)"
+          sw_vers
+
+      - name: Install Homebrew
+        run: |
+          if ! command -v brew &> /dev/null; then
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          fi
+          
+          # Add Homebrew to PATH
+          if [ "$(uname -m)" = "arm64" ]; then
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+          else
+            eval "$(/usr/local/bin/brew shellenv)"
+          fi
+
+      - name: Install Ansible
+        run: brew install ansible
+
+      - name: Run playbook in check mode
+        run: ansible-playbook -i ./hosts playbook.yml --check --diff
+
+      - name: Run actual setup
+        run: bash scripts/start.sh
+
+      - name: Verify installation
+        run: |
+          which git
+          which node || echo "Node not installed"
+          which python3
+          [ -d "$HOME/.oh-my-zsh" ] && echo "oh-my-zsh: OK" || echo "oh-my-zsh: MISSING"
+
+      - name: Display installation report
+        if: always()
+        run: cat ~/mac-setup/INSTALL_REPORT.txt || echo "No report generated"

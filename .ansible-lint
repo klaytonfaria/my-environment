@@ -1,0 +1,42 @@
+---
+# ansible-lint configuration
+# See https://ansible-lint.readthedocs.io/
+
+profile: production
+
+# Exclude paths
+exclude_paths:
+  - .github/
+  - tmp/
+  - .ansible/
+  - .mac-setup-backup/
+
+# Skip specific rules
+skip_list:
+  - role-name  # Allow flexible role naming
+  - no-handler  # Allow tasks without handlers where appropriate
+
+# Enable specific rules
+enable_list:
+  - args
+  - empty-string-compare
+  - no-log-password
+  - no-same-owner
+
+# Warn instead of error for these rules
+warn_list:
+  - command-instead-of-module
+  - package-latest
+  - risky-file-permissions
+
+# Set kind to tasks for task files
+kinds:
+  - tasks: "**/tasks/*.yml"
+  - handlers: "**/handlers/*.yml"
+  - vars: "**/vars/*.yml"
+
+# Mock modules (if needed)
+mock_modules: []
+
+# Mock roles (if needed)
+mock_roles: []
