@@ -95,7 +95,19 @@ jobs:
           fi
 
       - name: Install Ansible
-        run: brew install ansible
+        run: |
+          brew install ansible
+          # Ensure Ansible is in PATH
+          if [ "$(uname -m)" = "arm64" ]; then
+            echo "/opt/homebrew/bin" >> $GITHUB_PATH
+          else
+            echo "/usr/local/bin" >> $GITHUB_PATH
+          fi
+
+      - name: Verify Ansible installation
+        run: |
+          which ansible-playbook
+          ansible-playbook --version
 
       - name: Run playbook in check mode
         run: ansible-playbook -i ./hosts playbook.yml --check --diff
