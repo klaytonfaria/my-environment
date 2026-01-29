@@ -14,7 +14,6 @@ homebrew_packages:
   - eza  # Better ls (exa was renamed)
   - fastlane
   - fd  # Better find
-  - fvm
   - fzf  # Fuzzy finder
   - gh  # GitHub CLI
   - git

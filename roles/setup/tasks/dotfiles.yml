@@ -2,14 +2,14 @@
 - name: Check if iTerm2 is installed
   ansible.builtin.stat:
     path: "/Applications/iTerm.app"
-  register: iterm_check
+  register: setup_iterm_check
 
 - name: Clone dotfiles repository
   ansible.builtin.git:
     repo: "{{ repositories.dotfiles }}"
     dest: "{{ general.setup_dir }}/dotfiles"
     update: true
-  register: dotfiles_clone
+  register: setup_dotfiles_clone
 
 - name: Backup existing dotfiles
   ansible.builtin.copy:
@@ -55,14 +55,14 @@
     dest: "{{ general.local_home }}/.thymerc"
     state: link
     force: true
-  when: iterm_check.stat.exists
+  when: setup_iterm_check.stat.exists
 
 - name: Create iTerm2 utilities directory
   ansible.builtin.file:
     path: "{{ general.local_home }}/.iterm2"
     state: directory
     mode: '0755'
-  when: iterm_check.stat.exists
+  when: setup_iterm_check.stat.exists
 
 - name: Copy iTerm2 utilities
   ansible.builtin.copy:
@@ -74,5 +74,6 @@
     - imgcat
     - imgls
     - it2dl
-  when: iterm_check.stat.exists
+  when: setup_iterm_check.stat.exists
   failed_when: false
+

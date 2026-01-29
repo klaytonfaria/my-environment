@@ -2,10 +2,10 @@
 # Path and directory configurations
 
 general:
-  local_home: "{{ lookup('env','HOME') }}"
-  setup_dir: "{{ lookup('env','HOME') }}/mac-setup"
-  temp_dir: "{{ lookup('env','HOME') }}/.mac-setup/tmp"
-  backup_dir: "{{ lookup('env','HOME') }}/.mac-setup-backup/{{ ansible_date_time.iso8601_basic_short }}"
+  local_home: "{{ lookup('env', 'HOME') }}"
+  setup_dir: "{{ lookup('env', 'HOME') }}/mac-setup"
+  temp_dir: "{{ lookup('env', 'HOME') }}/.mac-setup/tmp"
+  backup_dir: "{{ lookup('env', 'HOME') }}/.mac-setup-backup/{{ ansible_date_time.iso8601_basic_short }}"
 
 # Repository URLs
 repositories:
@@ -17,3 +17,4 @@ repositories:
 
 # ASDF version
 asdf_version: "v0.14.0"  # Latest stable version
+

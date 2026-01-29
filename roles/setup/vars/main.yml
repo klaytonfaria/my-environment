@@ -4,11 +4,12 @@
 
 # You can still define shared variables here if needed
 shared_config:
-  ansible_user: "{{ lookup('env','USER') }}"
-  
+  ansible_user: "{{ lookup('env', 'USER') }}"
+
 # Note: Variables are now organized in:
 # - homebrew.yml: Homebrew packages and casks
 # - node.yml: Node.js packages
-# - python.yml: Python packages  
+# - python.yml: Python packages
 # - paths.yml: Directory paths and repository URLs
 # - local.yml: User-specific overrides (gitignored)
+

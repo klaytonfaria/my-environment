@@ -15,7 +15,7 @@
     dest: "{{ general.local_home }}/.asdf"
     version: "{{ asdf_version }}"
     update: true
-  register: asdf_install
+  register: setup_asdf_install
 
 - name: Install oh-my-zsh
   ansible.builtin.git:
@@ -23,7 +23,7 @@
     dest: "{{ general.local_home }}/.oh-my-zsh"
     depth: 1
     update: false
-  register: omz_install
+  register: setup_omz_install
 
 - name: Install Tmux Plugin Manager (TPM)
   ansible.builtin.git:
@@ -49,5 +49,5 @@
 - name: Notify shell configuration change
   ansible.builtin.debug:
     msg: "Shell configuration has been updated"
-  changed_when: omz_install.changed or asdf_install.changed
+  changed_when: setup_omz_install.changed or setup_asdf_install.changed
   notify: shell config changed

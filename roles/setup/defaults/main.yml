@@ -4,10 +4,10 @@
 
 # General settings
 general:
-  local_home: "{{ lookup('env','HOME') }}"
-  setup_dir: "{{ lookup('env','HOME') }}/mac-setup"
-  temp_dir: "{{ lookup('env','HOME') }}/.mac-setup/tmp"
-  backup_dir: "{{ lookup('env','HOME') }}/.mac-setup-backup"
+  local_home: "{{ lookup('env', 'HOME') }}"
+  setup_dir: "{{ lookup('env', 'HOME') }}/mac-setup"
+  temp_dir: "{{ lookup('env', 'HOME') }}/.mac-setup/tmp"
+  backup_dir: "{{ lookup('env', 'HOME') }}/.mac-setup-backup"
 
 # Installation behavior
 install_behavior:
@@ -15,7 +15,7 @@ install_behavior:
   allow_upgrade: false  # Set to true to upgrade existing packages
   ignore_errors: false  # Set to true for non-critical failures
   create_backup: true  # Backup existing dotfiles before overwriting
-  
+
 # Feature flags
 features:
   install_apps: true
@@ -24,7 +24,7 @@ features:
   setup_dotfiles: true
   setup_configuration: true
   configure_system_preferences: false  # Optional, requires user consent
-  
+
 # Architecture detection
 ansible_architecture_map:
   x86_64: "amd64"
@@ -35,3 +35,4 @@ ansible_architecture_map:
 homebrew_prefix:
   arm64: "/opt/homebrew"
   amd64: "/usr/local"
+

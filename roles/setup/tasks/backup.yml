@@ -19,7 +19,7 @@
     - .bash_profile
     - .profile
   failed_when: false
-  register: shell_backup
+  register: setup_shell_backup
 
 - name: Backup existing development tool configs
   ansible.builtin.copy:
@@ -33,7 +33,7 @@
     - .gitconfig
     - .npmrc
   failed_when: false
-  register: tool_backup
+  register: setup_tool_backup
 
 - name: Create backup manifest
   ansible.builtin.copy:
@@ -42,12 +42,12 @@
       Backup location: {{ general.backup_dir }}
       Hostname: {{ ansible_hostname }}
       User: {{ ansible_user_id }}
-      
+
       Backed up files:
-      {% for item in shell_backup.results %}
+      {% for item in setup_shell_backup.results %}
       - {{ item.item if item.changed else item.item + ' (not found)' }}
       {% endfor %}
-      {% for item in tool_backup.results %}
+      {% for item in setup_tool_backup.results %}
       - {{ item.item if item.changed else item.item + ' (not found)' }}
       {% endfor %}
     dest: "{{ general.backup_dir }}/BACKUP_MANIFEST.txt"
@@ -56,3 +56,4 @@
 - name: Display backup location
   ansible.builtin.debug:
     msg: "Configuration backup created at: {{ general.backup_dir }}"
+

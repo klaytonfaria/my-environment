@@ -1,14 +1,14 @@
 ---
 - name: Set Homebrew prefix based on architecture
   ansible.builtin.set_fact:
-    brew_prefix: "{{ '/opt/homebrew' if ansible_machine == 'arm64' else '/usr/local' }}"
+    setup_brew_prefix: "{{ '/opt/homebrew' if ansible_machine == 'arm64' else '/usr/local' }}"
 
 - name: Ensure Homebrew is installed
   ansible.builtin.stat:
-    path: "{{ brew_prefix }}/bin/brew"
-  register: homebrew_check
-  failed_when: not homebrew_check.stat.exists
-  
+    path: "{{ setup_brew_prefix }}/bin/brew"
+  register: setup_homebrew_check
+  failed_when: not setup_homebrew_check.stat.exists
+
 - name: Update Homebrew
   community.general.homebrew:
     update_homebrew: true
@@ -18,25 +18,25 @@
   community.general.homebrew:
     name: "{{ homebrew_packages }}"
     state: "{{ 'latest' if install_behavior.allow_upgrade | default(false) else 'present' }}"
-  register: brew_install
+  register: setup_brew_install
   retries: 3
   delay: 5
-  until: brew_install is succeeded
+  until: setup_brew_install is succeeded
 
 - name: Install Homebrew cask applications
   community.general.homebrew_cask:
     name: "{{ item }}"
     state: present
   loop: "{{ homebrew_casks }}"
-  register: cask_install
+  register: setup_cask_install
   retries: 2
   delay: 3
-  until: cask_install is succeeded
+  until: setup_cask_install is succeeded
   failed_when: false  # Some casks may already be installed manually
 
 - name: Check if Node.js is available
   ansible.builtin.command: which node
-  register: node_check
+  register: setup_node_check
   changed_when: false
   failed_when: false
 
@@ -46,18 +46,18 @@
     state: present
     global: true
   loop: "{{ node_packages }}"
-  when: 
-    - node_check.rc == 0
+  when:
+    - setup_node_check.rc == 0
     - features.install_node_modules | default(true)
-  register: npm_install
+  register: setup_npm_install
   retries: 2
   delay: 3
-  until: npm_install is succeeded
+  until: setup_npm_install is succeeded
   failed_when: false
 
 - name: Check if Python3 is available
   ansible.builtin.command: which python3
-  register: python_check
+  register: setup_python_check
   changed_when: false
   failed_when: false
 
@@ -67,17 +67,18 @@
     state: present
     executable: pip3
   when:
-    - python_check.rc == 0
+    - setup_python_check.rc == 0
     - features.install_python_packages | default(true)
-  register: pip_install
+  register: setup_pip_install
   retries: 2
   delay: 3
-  until: pip_install is succeeded
+  until: setup_pip_install is succeeded
 
 - name: Display installation summary
   ansible.builtin.debug:
-    msg: 
+    msg:
       - "Homebrew packages: {{ homebrew_packages | length }} installed"
       - "Cask applications: {{ homebrew_casks | length }} installed"
-      - "Node packages: {{ node_packages | length if node_check.rc == 0 else 0 }} installed"
-      - "Python packages: {{ python_packages | length if python_check.rc == 0 else 0 }} installed"
+      - "Node packages: {{ node_packages | length if setup_node_check.rc == 0 else 0 }} installed"
+      - "Python packages: {{ python_packages | length if setup_python_check.rc == 0 else 0 }} installed"
+
