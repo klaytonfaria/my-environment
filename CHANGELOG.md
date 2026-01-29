@@ -108,7 +108,7 @@ Previous versions focused on basic automation without comprehensive documentatio
 
 2. **Update Repository**:
    ```bash
-   git pull origin master
+   git pull origin main
    ```
 
 3. **Review New Structure**:
