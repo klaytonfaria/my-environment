@@ -3,10 +3,10 @@
   hosts: all
   connection: local
   gather_facts: true
-  
+
   roles:
     - setup
-  
+
   post_tasks:
     - name: Final setup message
       ansible.builtin.debug:

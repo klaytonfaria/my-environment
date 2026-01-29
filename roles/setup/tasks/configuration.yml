@@ -5,49 +5,70 @@
     state: directory
     mode: '0755'
   loop:
-    - "{{ general.setup_dir }}"
-    - "{{ general.temp_dir }}"
-    - "{{ general.backup_dir }}"
+    - "{{ setup_general.setup_dir }}"
+    - "{{ setup_general.temp_dir }}"
+    - "{{ setup_general.backup_dir }}"
 
 - name: Install asdf version manager
   ansible.builtin.git:
-    repo: "{{ repositories.asdf }}"
-    dest: "{{ general.local_home }}/.asdf"
-    version: "{{ asdf_version }}"
+    repo: "{{ setup_repositories.asdf }}"
+    dest: "{{ setup_general.local_home }}/.asdf"
+    version: "{{ setup_asdf_version }}"
     update: true
   register: setup_asdf_install
 
-- name: Install oh-my-zsh
+- name: Check if oh-my-zsh exists
+  ansible.builtin.stat:
+    path: "{{ setup_general.local_home }}/.oh-my-zsh"
+  register: setup_omz_dir_check
+
+- name: Install oh-my-zsh  # noqa latest[git]
   ansible.builtin.git:
-    repo: "{{ repositories.oh_my_zsh }}"
-    dest: "{{ general.local_home }}/.oh-my-zsh"
+    repo: "{{ setup_repositories.oh_my_zsh }}"
+    dest: "{{ setup_general.local_home }}/.oh-my-zsh"
     depth: 1
     update: false
+  when: not setup_omz_dir_check.stat.exists
   register: setup_omz_install
+  failed_when: false
 
-- name: Install Tmux Plugin Manager (TPM)
+- name: Check if TPM exists
+  ansible.builtin.stat:
+    path: "{{ setup_general.local_home }}/.tmux/plugins/tpm"
+  register: setup_tpm_dir_check
+
+- name: Install Tmux Plugin Manager (TPM)  # noqa latest[git]
   ansible.builtin.git:
-    repo: "{{ repositories.tmux_plugin_manager }}"
-    dest: "{{ general.local_home }}/.tmux/plugins/tpm"
+    repo: "{{ setup_repositories.tmux_plugin_manager }}"
+    dest: "{{ setup_general.local_home }}/.tmux/plugins/tpm"
     depth: 1
-    update: true
+    update: false
+  when: not setup_tpm_dir_check.stat.exists
+  failed_when: false
 
-- name: Install Hhighlighter
+- name: Check if Hhighlighter exists
+  ansible.builtin.stat:
+    path: "{{ setup_general.setup_dir }}/h"
+  register: setup_hhighlighter_check
+
+- name: Install Hhighlighter  # noqa latest[git]
   ansible.builtin.git:
-    repo: "{{ repositories.hhighlighter }}"
-    dest: "{{ general.setup_dir }}/h"
-    update: true
+    repo: "{{ setup_repositories.hhighlighter }}"
+    dest: "{{ setup_general.setup_dir }}/h"
+    update: false
+  when: not setup_hhighlighter_check.stat.exists
+  failed_when: false
 
 - name: Create symlink for h.sh
   ansible.builtin.file:
-    src: "{{ general.setup_dir }}/h/h.sh"
-    dest: "{{ general.local_home }}/h.sh"
+    src: "{{ setup_general.setup_dir }}/h/h.sh"
+    dest: "{{ setup_general.local_home }}/h.sh"
     state: link
     force: true
-  when: general.setup_dir is defined
+  when: setup_general.setup_dir is defined
 
 - name: Notify shell configuration change
   ansible.builtin.debug:
     msg: "Shell configuration has been updated"
-  changed_when: setup_omz_install.changed or setup_asdf_install.changed
+  changed_when: setup_omz_install is changed or setup_asdf_install is changed
   notify: shell config changed

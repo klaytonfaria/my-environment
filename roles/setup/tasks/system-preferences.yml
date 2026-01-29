@@ -6,13 +6,13 @@
 - name: Display system preferences warning
   ansible.builtin.pause:
     prompt: |
-      
+
       This will modify macOS system preferences including:
       - Dock settings
       - Finder preferences
       - Keyboard and trackpad settings
       - Energy and screen settings
-      
+
       Press ENTER to continue or Ctrl+C to skip
     seconds: 5
 
@@ -133,11 +133,11 @@
     domain: com.apple.screencapture
     key: location
     type: string
-    value: "{{ general.local_home }}/Pictures/Screenshots"
+    value: "{{ setup_general.local_home }}/Pictures/Screenshots"
 
 - name: Create Screenshots directory
   ansible.builtin.file:
-    path: "{{ general.local_home }}/Pictures/Screenshots"
+    path: "{{ setup_general.local_home }}/Pictures/Screenshots"
     state: directory
     mode: '0755'
 

@@ -28,4 +28,3 @@
   listen: "restart finder"
   failed_when: false
   changed_when: false
-

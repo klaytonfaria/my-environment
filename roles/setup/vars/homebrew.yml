@@ -1,6 +1,6 @@
 ---
 # Homebrew formulae (CLI tools)
-homebrew_packages:
+setup_homebrew_packages:
   - ack
   - apktool
   - asdf  # Universal version manager (replaces nvm, rbenv, etc.)
@@ -19,7 +19,6 @@ homebrew_packages:
   - git
   - gti  # Git typo helper
   - highlight
-  - idb-companion
   - jq  # JSON processor
   - kubectl  # Kubernetes CLI
   - libimobiledevice
@@ -45,7 +44,7 @@ homebrew_packages:
   - zsh-completions
 
 # Homebrew cask applications (GUI apps)
-homebrew_casks:
+setup_homebrew_casks:
   - 1password
   - alfred
   - caffeine
@@ -75,3 +74,7 @@ homebrew_casks:
   - ticktick
   - visual-studio-code
   - zoom
+
+# Shared configuration
+setup_shared_config:
+  update_homebrew: true

@@ -1,6 +1,6 @@
 ---
 # Python packages (installed via pip3)
-python_packages:
+setup_python_packages:
   - ansible-lint
   - black  # Code formatter
   - flake8  # Linter
@@ -14,4 +14,4 @@ python_packages:
   - virtualenv  # Virtual environments
 
 # Python version (via asdf)
-python_version: "3.11"  # or "latest"
+setup_python_version: "3.11"  # or "latest"

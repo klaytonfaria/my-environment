@@ -3,21 +3,21 @@
 # These can be overridden in vars/local.yml
 
 # General settings
-general:
+setup_general:
   local_home: "{{ lookup('env', 'HOME') }}"
   setup_dir: "{{ lookup('env', 'HOME') }}/mac-setup"
   temp_dir: "{{ lookup('env', 'HOME') }}/.mac-setup/tmp"
   backup_dir: "{{ lookup('env', 'HOME') }}/.mac-setup-backup"
 
 # Installation behavior
-install_behavior:
+setup_install_behavior:
   state: present  # Use 'present' instead of 'latest' for stability
   allow_upgrade: false  # Set to true to upgrade existing packages
   ignore_errors: false  # Set to true for non-critical failures
   create_backup: true  # Backup existing dotfiles before overwriting
 
 # Feature flags
-features:
+setup_features:
   install_apps: true
   install_node_modules: true
   install_python_packages: true
@@ -26,13 +26,12 @@ features:
   configure_system_preferences: false  # Optional, requires user consent
 
 # Architecture detection
-ansible_architecture_map:
+setup_ansible_architecture_map:
   x86_64: "amd64"
   aarch64: "arm64"
   arm64: "arm64"
 
 # Homebrew paths by architecture
-homebrew_prefix:
+setup_homebrew_prefix:
   arm64: "/opt/homebrew"
   amd64: "/usr/local"
-

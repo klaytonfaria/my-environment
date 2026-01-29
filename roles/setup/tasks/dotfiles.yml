@@ -4,56 +4,63 @@
     path: "/Applications/iTerm.app"
   register: setup_iterm_check
 
-- name: Clone dotfiles repository
+- name: Check if dotfiles exist
+  ansible.builtin.stat:
+    path: "{{ setup_general.setup_dir }}/dotfiles"
+  register: setup_dotfiles_check
+
+- name: Clone dotfiles repository  # noqa latest[git]
   ansible.builtin.git:
-    repo: "{{ repositories.dotfiles }}"
-    dest: "{{ general.setup_dir }}/dotfiles"
-    update: true
+    repo: "{{ setup_repositories.dotfiles }}"
+    dest: "{{ setup_general.setup_dir }}/dotfiles"
+    update: false
+  when: not setup_dotfiles_check.stat.exists
   register: setup_dotfiles_clone
+  failed_when: false
 
 - name: Create symlink for zsh configuration
   ansible.builtin.file:
-    src: "{{ general.setup_dir }}/dotfiles/zsh/.zshrc"
-    dest: "{{ general.local_home }}/.zshrc"
+    src: "{{ setup_general.setup_dir }}/dotfiles/zsh/.zshrc"
+    dest: "{{ setup_general.local_home }}/.zshrc"
     state: link
     force: true
   notify: shell config changed
 
 - name: Create symlink for vim configuration
   ansible.builtin.file:
-    src: "{{ general.setup_dir }}/dotfiles/vim/.vimrc"
-    dest: "{{ general.local_home }}/.vimrc"
+    src: "{{ setup_general.setup_dir }}/dotfiles/vim/.vimrc"
+    dest: "{{ setup_general.local_home }}/.vimrc"
     state: link
     force: true
   notify: vim config changed
 
 - name: Create symlink for tmux configuration
   ansible.builtin.file:
-    src: "{{ general.setup_dir }}/dotfiles/tmux/.tmux.conf"
-    dest: "{{ general.local_home }}/.tmux.conf"
+    src: "{{ setup_general.setup_dir }}/dotfiles/tmux/.tmux.conf"
+    dest: "{{ setup_general.local_home }}/.tmux.conf"
     state: link
     force: true
   notify: tmux config changed
 
 - name: Create symlink for thyme configuration
   ansible.builtin.file:
-    src: "{{ general.setup_dir }}/dotfiles/thyme/.thymerc"
-    dest: "{{ general.local_home }}/.thymerc"
+    src: "{{ setup_general.setup_dir }}/dotfiles/thyme/.thymerc"
+    dest: "{{ setup_general.local_home }}/.thymerc"
     state: link
     force: true
   when: setup_iterm_check.stat.exists
 
 - name: Create iTerm2 utilities directory
   ansible.builtin.file:
-    path: "{{ general.local_home }}/.iterm2"
+    path: "{{ setup_general.local_home }}/.iterm2"
     state: directory
     mode: '0755'
   when: setup_iterm_check.stat.exists
 
 - name: Copy iTerm2 utilities
   ansible.builtin.copy:
-    src: "{{ general.setup_dir }}/dotfiles/iterm/iterm2/{{ item }}"
-    dest: "{{ general.local_home }}/.iterm2/{{ item }}"
+    src: "{{ setup_general.setup_dir }}/dotfiles/iterm/iterm2/{{ item }}"
+    dest: "{{ setup_general.local_home }}/.iterm2/{{ item }}"
     remote_src: true
     mode: '0755'
   loop:
@@ -62,5 +69,3 @@
     - it2dl
   when: setup_iterm_check.stat.exists
   failed_when: false
-
-

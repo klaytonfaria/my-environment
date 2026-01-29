@@ -3,7 +3,7 @@
 # The actual loading happens in the playbook or tasks
 
 # You can still define shared variables here if needed
-shared_config:
+setup_shared_config:
   ansible_user: "{{ lookup('env', 'USER') }}"
 
 # Note: Variables are now organized in:
@@ -12,4 +12,3 @@ shared_config:
 # - python.yml: Python packages
 # - paths.yml: Directory paths and repository URLs
 # - local.yml: User-specific overrides (gitignored)
-

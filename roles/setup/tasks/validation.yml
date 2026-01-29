@@ -46,12 +46,12 @@
 
 - name: Verify oh-my-zsh installation
   ansible.builtin.stat:
-    path: "{{ general.local_home }}/.oh-my-zsh"
+    path: "{{ setup_general.local_home }}/.oh-my-zsh"
   register: setup_omz_check
 
 - name: Verify dotfiles are symlinked
   ansible.builtin.stat:
-    path: "{{ general.local_home }}/{{ item }}"
+    path: "{{ setup_general.local_home }}/{{ item }}"
   loop:
     - .zshrc
     - .vimrc
@@ -108,6 +108,5 @@
 
       Brew Doctor Output:
       {{ setup_brew_doctor.stdout if setup_brew_doctor.stdout else 'No issues found' }}
-    dest: "{{ general.setup_dir }}/INSTALL_REPORT.txt"
+        dest: "{{ setup_general.setup_dir }}/INSTALL_REPORT.txt"
     mode: '0644'
-

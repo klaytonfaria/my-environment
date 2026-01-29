@@ -16,8 +16,8 @@
 
 - name: Install Homebrew packages
   community.general.homebrew:
-    name: "{{ homebrew_packages }}"
-    state: "{{ 'latest' if install_behavior.allow_upgrade | default(false) else 'present' }}"
+    name: "{{ setup_homebrew_packages }}"
+    state: "{{ 'latest' if setup_install_behavior.allow_upgrade | default(false) else 'present' }}"
   register: setup_brew_install
   retries: 3
   delay: 5
@@ -27,7 +27,7 @@
   community.general.homebrew_cask:
     name: "{{ item }}"
     state: present
-  loop: "{{ homebrew_casks }}"
+  loop: "{{ setup_homebrew_casks }}"
   register: setup_cask_install
   retries: 2
   delay: 3
@@ -45,10 +45,10 @@
     name: "{{ item }}"
     state: present
     global: true
-  loop: "{{ node_packages }}"
+  loop: "{{ setup_node_packages }}"
   when:
     - setup_node_check.rc == 0
-    - features.install_node_modules | default(true)
+    - setup_features.install_node_modules | default(true)
   register: setup_npm_install
   retries: 2
   delay: 3
@@ -63,12 +63,12 @@
 
 - name: Install Python packages
   ansible.builtin.pip:
-    name: "{{ python_packages }}"
+    name: "{{ setup_python_packages }}"
     state: present
     executable: pip3
   when:
     - setup_python_check.rc == 0
-    - features.install_python_packages | default(true)
+    - setup_features.install_python_packages | default(true)
   register: setup_pip_install
   retries: 2
   delay: 3
@@ -77,8 +77,7 @@
 - name: Display installation summary
   ansible.builtin.debug:
     msg:
-      - "Homebrew packages: {{ homebrew_packages | length }} installed"
-      - "Cask applications: {{ homebrew_casks | length }} installed"
-      - "Node packages: {{ node_packages | length if setup_node_check.rc == 0 else 0 }} installed"
-      - "Python packages: {{ python_packages | length if setup_python_check.rc == 0 else 0 }} installed"
-
+      - "Homebrew packages: {{ setup_homebrew_packages | length }} installed"
+      - "Cask applications: {{ setup_homebrew_casks | length }} installed"
+      - "Node packages: {{ setup_node_packages | length if setup_node_check.rc == 0 else 0 }} installed"
+      - "Python packages: {{ setup_python_packages | length if setup_python_check.rc == 0 else 0 }} installed"

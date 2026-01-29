@@ -1,6 +1,6 @@
 ---
 # Global Node.js packages
-node_packages:
+setup_node_packages:
   - "@commitlint/cli"
   - "@commitlint/config-conventional"
   - chance-cli
@@ -18,4 +18,4 @@ node_packages:
   - webpack-cli
 
 # Node version to use (via asdf)
-node_version: "lts"  # Use 'lts' for latest LTS or specific version like '20.10.0'
+setup_node_version: "lts"  # Use 'lts' for latest LTS or specific version like '20.10.0'

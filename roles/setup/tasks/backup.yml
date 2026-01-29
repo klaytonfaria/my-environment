@@ -3,14 +3,14 @@
 
 - name: Create backup directory with timestamp
   ansible.builtin.file:
-    path: "{{ general.backup_dir }}"
+    path: "{{ setup_general.backup_dir }}"
     state: directory
     mode: '0755'
 
 - name: Backup existing shell configurations
   ansible.builtin.copy:
-    src: "{{ general.local_home }}/{{ item }}"
-    dest: "{{ general.backup_dir }}/{{ item }}"
+    src: "{{ setup_general.local_home }}/{{ item }}"
+    dest: "{{ setup_general.backup_dir }}/{{ item }}"
     remote_src: true
     mode: preserve
   loop:
@@ -23,8 +23,8 @@
 
 - name: Backup existing development tool configs
   ansible.builtin.copy:
-    src: "{{ general.local_home }}/{{ item }}"
-    dest: "{{ general.backup_dir }}/{{ item }}"
+    src: "{{ setup_general.local_home }}/{{ item }}"
+    dest: "{{ setup_general.backup_dir }}/{{ item }}"
     remote_src: true
     mode: preserve
   loop:
@@ -39,7 +39,7 @@
   ansible.builtin.copy:
     content: |
       Backup created: {{ ansible_date_time.iso8601 }}
-      Backup location: {{ general.backup_dir }}
+      Backup location: {{ setup_general.backup_dir }}
       Hostname: {{ ansible_hostname }}
       User: {{ ansible_user_id }}
 
@@ -50,10 +50,9 @@
       {% for item in setup_tool_backup.results %}
       - {{ item.item if item.changed else item.item + ' (not found)' }}
       {% endfor %}
-    dest: "{{ general.backup_dir }}/BACKUP_MANIFEST.txt"
+    dest: "{{ setup_general.backup_dir }}/BACKUP_MANIFEST.txt"
     mode: '0644'
 
 - name: Display backup location
   ansible.builtin.debug:
-    msg: "Configuration backup created at: {{ general.backup_dir }}"
-
+    msg: "Configuration backup created at: {{ setup_general.backup_dir }}"
